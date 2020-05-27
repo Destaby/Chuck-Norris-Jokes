@@ -1,0 +1,339 @@
+body {
+	position: absolute;
+	width: 1440px;
+	height: 900px;
+
+	background-color: white;
+
+}
+
+#left {
+	width: 960px;
+}
+
+#right {
+	
+	position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+	overflow:hidden;
+	margin-top: -10px;
+	margin-bottom: -10px;
+	margin-right: -52px;
+	overflow-y: auto;
+
+	left: 960px;
+	top: 0px;
+
+	background: #F8F8F8;
+}
+
+#MSI {
+	position: absolute;
+	width: 87px;
+	height: 28px;
+	left: 140px;
+	top: 40px;
+
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 28px;
+
+	color: #333333;
+}
+
+#Hey {
+	position: absolute;
+	width: 680px;
+	height: 44px;
+	left: 140px;
+	top: 146px;
+
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 32px;
+	line-height: 44px;
+
+	color: #333333;
+}
+
+#find {
+	position: absolute;
+	width: 415px;
+	height: 44px;
+	left: 140px;
+	top: 190px;
+
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 44px;
+
+	color: #333333;
+}
+
+#buttons {
+	position: absolute;
+	left: 140px;
+	top: 280px;
+}
+
+.menu {
+	position: relative;
+	width: 20px;
+	height: 20px;
+	background: #F8F8F8;
+	margin-bottom: 5px;
+	margin-top: 5px;
+
+
+	border: 2px solid #ABABAB;
+	box-sizing: border-box;
+	border-radius: 50%;
+}
+
+.in {
+	position: relative;
+	visibility: hidden;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	left: -3px;
+
+	background: #333333;
+}
+
+.buttex {
+	position: relative;
+	width: 68px;
+	height: 26px;
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 26px;
+	margin-left: 15px;
+	color: #333333;
+}
+
+#get-jokes {
+	position: relative;
+	width: 152px;
+	height: 42px;
+	margin-top: 15px;
+	margin-bottom: 40px;
+
+
+	background: linear-gradient(92.01deg, #8EA7FF 0%, #7291FF 100%);
+	border-radius: 10px;
+}
+
+#gettext {
+	position: relative;
+	width: 72px;
+	height: 22px;
+
+
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 22px;
+
+	color: #FFFFFF;
+}
+
+.category {
+	position: relative;
+	/* width: 85px;
+	height: 28px; */
+
+	border: 2px solid #F8F8F8;
+	box-sizing: border-box;
+	border-radius: 6px;
+	margin-top: 15px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 13px;
+	padding-right: 13px;
+
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 12px;
+	line-height: 16px;
+
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	
+	background-color: white;
+	color: #ABABAB;
+}
+
+#onCat {
+	width: 800px;
+}
+
+.joke {
+	position: relative;
+	height: auto; 
+	width: 680px;
+	padding-bottom: 67px;
+	margin-bottom: 20px;
+
+
+	background: #F8F8F8;
+	border-radius: 20px;
+}
+
+.icon {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	left: 40px;
+	top: 27px;
+	border-radius: 50%;
+
+	background-color: #FFFFFF;
+}
+
+.id {
+	position: absolute;
+	left: 100px;
+	top: 27px;
+
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 10px;
+	line-height: 14px;
+
+	color: #ABABAB
+}
+
+.update {
+	position: absolute;
+	left: 100px;
+	bottom: 21px;
+
+
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 10px;
+	line-height: 14px;
+
+	color: #ABABAB;
+}
+
+.text {
+	position: relative;
+	width: 540px;
+	left: 100px;
+	top: 40px;
+
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 26px;
+
+	color: #333333;
+}
+
+.categ {
+	position: absolute;
+	width: 107px;
+	right: 60px;
+	bottom: 21px;
+	text-align: center;
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 10px;
+	line-height: 14px;
+
+	letter-spacing: 2px;
+	text-transform: uppercase;
+
+	background: #FFFFFF;
+	border-radius: 6px;
+}
+
+input {
+	position: relative;
+	width: 680px;
+	height: 42px;
+	margin-top: 15px;
+	margin-bottom: -5px;
+	padding-left: 15px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 15px;
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 26px;
+
+	color: #333333;
+
+	border: 2px solid #333333;
+	box-sizing: border-box;
+	border-radius: 10px;
+}
+
+::placeholder {
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 22px;
+
+	color: #ABABAB;
+}
+
+.favBtn {
+	position: absolute;
+	right: 40px;
+	top: 17px;
+	width: 20px;
+	height: 17px;
+
+}
+
+#Favourite {
+	position: relative;
+	width: 84px;
+	height: 28px;
+	left: 40px;
+	top: 12px;
+
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 28px;
+
+	color: #ABABAB;
+}
+
+.protoEl {
+	width: 460px;
+	left: 40px;
+
+	background: #FFFFFF;
+	border: 1px solid #F8F8F8;
+	box-sizing: border-box;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+}
