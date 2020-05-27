@@ -1,0 +1,19 @@
+{
+  "name": "chuck_jokes",
+  "version": "1.0.0",
+  "description": "This server lets user get a random Chuck Norris Joke",
+  "main": "MacPaw1.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Destaby/Chuck-Norris-Jokes.git"
+  },
+  "author": "Nick Rudyk <rudik.nick.nick@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Destaby/Chuck-Norris-Jokes/issues"
+  },
+  "homepage": "https://github.com/Destaby/Chuck-Norris-Jokes#readme"
+}
