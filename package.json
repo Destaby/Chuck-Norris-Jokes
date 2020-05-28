@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Destaby/Chuck-Norris-Jokes/issues"
   },
-  "homepage": "https://github.com/Destaby/Chuck-Norris-Jokes#readme"
+  "homepage": "https://github.com/Destaby/Chuck-Norris-Jokes#readme",
+  "devDependencies": {
+    "eslint": "^7.0.0"
+  }
 }
