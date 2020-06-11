@@ -1,7 +1,5 @@
 'use strict';
 
-let onCategories;
-let onSearch;
 let prevState = [];
 let text = [];
 const categoryOnClick = new Set();
@@ -12,9 +10,9 @@ if (localStorage.length > 0) {
   text = JSON.parse(localStorage.getItem('text'));
 }
 const onGet = {
-  'Ran': () => onGetRan(),
-  'From': () => onGetCat(),
-  'Sear': () => onGetSearch(),
+  'Ran': onGetRan,
+  'From': onGetCat,
+  'Sear': onGetSearch,
 };
 const ident = {
   'Ran': false,
@@ -23,19 +21,29 @@ const ident = {
 };
 const metods = {
   'Ran': () => undefined,
-  'From': () => onCategories(),
-  'Sear': () => onSearch(),
+  'From': () => {},
+  'Sear': () => {},
 };
 
 function httpRequest(fn, url) {
   const onReq = new XMLHttpRequest();
   onReq.addEventListener('load', fn);
+  onReq.onreadystatechange = () => {
+    if (onReq.readyState === XMLHttpRequest.DONE) {
+      if (onReq.status !== 200) {
+        const body = document.getElementsByTagName('body')[0];
+        body.innerText = `Error code: ${onReq.status}
+          Cannot get a joke
+          Try to connect to server later`;
+      }
+    }
+  };
   onReq.open('GET', url);
   onReq.send();
 }
 
 function reqListener() {
-  onCategories = onCategoriesWrap(this.responseText);
+  metods['From'] = onCategoriesWrap(this.responseText);
 }
 
 /* when the page is downloaded, we need to take all categories
@@ -43,7 +51,7 @@ function reqListener() {
 
 document.addEventListener('DOMContentLoaded', () => {
   httpRequest(reqListener, 'https://api.chucknorris.io/jokes/categories');
-  onSearch = onSearchWrap();
+  metods['Sear'] = onSearchWrap();
   preventer();
   text.forEach(el => onGetSearch(el, false));
 
@@ -61,8 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // process onclick event on button "{category}"
 
 function catOnClick(event) {
-  const flag = (event.target.style.color === 'rgb(51, 51, 51)');
-  if (!flag) {
+  const { color } = event.target.style;
+  if (color !== 'rgb(51, 51, 51)') {
     event.target.style.backgroundColor = '#F8F8F8';
     event.target.style.color = '#333333';
     categoryOnClick.add(event.target.innerHTML);
@@ -108,9 +116,7 @@ function onClick(id) {
     curr.style.borderColor = '#333333';
     metods[id]();
     for (const key in ident) {
-      if (ident[key] === true) {
-        onClick(key);
-      }
+      if (ident[key]) onClick(key);
     }
   } else {
     el.style.visibility = 'hidden';
@@ -127,9 +133,8 @@ function butToRemove() {
   const buttons = document.getElementById('buttons');
   for (let i = 0; i < buttons.children.length; i++) {
     const el = buttons.children[i];
-    if (el.lastChild &&
-    el.lastChild.textContent &&
-    (el.lastChild.textContent === text)) {
+    const joke = el.lastChild;
+    if (joke && joke.textContent === text) {
       const button = el.children.length === 5 ? el.children[3] : el.children[4];
       button.click();
     }
@@ -285,10 +290,14 @@ function onGetCat() {
   }
 }
 
-function append(flag) {
+function append(flag, onlyOne = false) {
   return function appender() {
     const jokeInfo = JSON.parse(this.responseText);
     if (jokeInfo.total) {
+      if (onlyOne) {
+        appenderToCreate(jokeInfo.result[0], flag);
+        return;
+      }
       for (let i = 0; i < jokeInfo.total; i++) {
         appenderToCreate(jokeInfo.result[i], flag);
       }
@@ -299,13 +308,13 @@ function append(flag) {
 }
 
 function onGetSearch(value = '', flag = true) {
-  let text = '';
-  if (value) {
-    text = value.slice(0, 115);
-  }
+  console.log(value);
+  const text = value ? value.slice(0, 115) : '';
+  console.log(text);
   const query = value ? text : document.getElementsByTagName('input')[0].value;
   if (query) {
-    const appender = append(flag);
+    let appender;
+    text.length < 115 ? appender = append(flag, true) : append(flag);
     httpRequest(appender, `https://api.chucknorris.io/jokes/search?query=${query}`);
   }
 }
@@ -318,7 +327,7 @@ function onGetClick() {
     prevState = [];
   }
   for (const el in ident) {
-    ident[el] ? onGet[el]() : null;
+    if (ident[el]) onGet[el]();
   }
 }
 
