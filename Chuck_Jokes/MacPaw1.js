@@ -250,7 +250,7 @@ function appenderToCreate(jokeInfo, flag = true) {
     category.classList.add('categ');
     joke.appendChild(category);
   }
-  const data = Math.floor(
+  const hours = Math.floor(
     (Date.now() - Date.parse(jokeInfo.updated_at)) / 3600000
   );
   const date = document.createElement('P');
@@ -260,7 +260,7 @@ function appenderToCreate(jokeInfo, flag = true) {
   const text = document.createElement('P');
   text.innerHTML = jokeInfo.value;
   text.classList.add('text');
-  date.innerHTML = `Last update: ${data} hours ago`;
+  date.innerHTML = `Last update: ${hours} hours ago`;
   date.classList.add('update');
   icon.classList.add('icon');
   icon.setAttribute('alt', 'nothing');
@@ -308,10 +308,11 @@ function append(flag, onlyOne = false) {
 }
 
 function onGetSearch(value = '', flag = true) {
-  console.log(value);
-  const text = value ? value.slice(0, 115) : '';
-  console.log(text);
-  const query = value ? text : document.getElementsByTagName('input')[0].value;
+  let query = value.slice(0, 115);
+  if (!query) {
+    const text = document.getElementsByTagName('input')[0];
+    query = text.value.slice(0, 115);
+  }
   if (query) {
     let appender;
     text.length < 115 ? appender = append(flag, true) : append(flag);
