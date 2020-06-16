@@ -31,7 +31,7 @@ function httpRequest(fn, url) {
   onReq.onreadystatechange = () => {
     if (onReq.readyState === XMLHttpRequest.DONE) {
       if (onReq.status !== 200) {
-        const body = document.getElementsByTagName('body')[0];
+        const body = document.querySelector('body');
         body.innerText = `Error code: ${onReq.status}
           Cannot get a joke
           Try to connect to server later`;
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   preventer();
   text.forEach(el => onGetSearch(el, false));
 
-  const body = document.getElementsByTagName('body')[0];
+  const body = document.querySelector('body');
   body.onbeforeunload = () => {
     localStorage.clear();
     const arrOfFav = [];
@@ -73,11 +73,11 @@ function catOnClick(event) {
   if (color !== 'rgb(51, 51, 51)') {
     event.target.style.backgroundColor = '#F8F8F8';
     event.target.style.color = '#333333';
-    categoryOnClick.add(event.target.innerHTML);
+    categoryOnClick.add(event.target.innerText);
   } else {
     event.target.style.backgroundColor = '#FFFFFF';
     event.target.style.color = '#ABABAB';
-    categoryOnClick.delete(event.target.innerHTML);
+    categoryOnClick.delete(event.target.innerText);
   }
 }
 
@@ -90,7 +90,7 @@ function onCategoriesWrap(arr) {
   block.setAttribute('id', 'onCat');
   for (const category of array) {
     const btn = document.createElement('BUTTON');
-    btn.innerHTML = category;
+    btn.innerText = category;
     btn.classList.add('category');
     btn.addEventListener('click', catOnClick);
     block.appendChild(btn);
@@ -135,7 +135,8 @@ function butToRemove() {
     const el = buttons.children[i];
     const joke = el.lastChild;
     if (joke && joke.textContent === text) {
-      const button = el.children.length === 5 ? el.children[3] : el.children[4];
+      const i = findIndex(el.children.length);
+      const button = el.children[i];
       button.click();
     }
   }
@@ -168,8 +169,8 @@ function createFavourites() {
     proto.classList.add('protoEl');
     proto.lastChild.style.width = '350px';
     proto.lastChild.style.top = '30px';
-    const button = proto.children.length === 5 ?
-      proto.children[3] : proto.children[4];
+    const i = findIndex(proto.children.length);
+    const button = proto.children[i];
     button.addEventListener('click', butToRemove);
     favourSet.add(proto);
     divFav.appendChild(proto);
@@ -219,8 +220,8 @@ function isFavourite(joke) {
   const text = joke.lastChild.textContent;
   favourSet.forEach(el => {
     if (el.lastChild.textContent === text) {
-      const button = joke.children.length === 5 ?
-        joke.children[3] : joke.children[4];
+      const i = findIndex(joke.children.length);
+      const button = joke.children[i];
       button.click();
     }
   });
@@ -243,10 +244,9 @@ function appenderToCreate(jokeInfo, flag = true) {
   const body = document.getElementById('buttons');
   const joke = document.createElement('DIV');
   joke.classList.add('joke');
-  if (!jokeInfo.categories) return;
   if (jokeInfo.categories[0]) {
     const category = document.createElement('P');
-    category.innerHTML = jokeInfo.categories[0];
+    category.innerText = jokeInfo.categories[0];
     category.classList.add('categ');
     joke.appendChild(category);
   }
@@ -258,14 +258,14 @@ function appenderToCreate(jokeInfo, flag = true) {
   const icon = document.createElement('IMG');
   const id = document.createElement('A');
   const text = document.createElement('P');
-  text.innerHTML = jokeInfo.value;
+  text.innerText = jokeInfo.value;
   text.classList.add('text');
-  date.innerHTML = `Last update: ${hours} hours ago`;
+  date.innerText = `Last update: ${hours} hours ago`;
   date.classList.add('update');
   icon.classList.add('icon');
   icon.setAttribute('alt', 'nothing');
   icon.setAttribute('src', jokeInfo.icon_url);
-  id.innerHTML = `ID: ${jokeInfo.id}`;
+  id.innerText = `ID: ${jokeInfo.id}`;
   id.classList.add('id');
   id.setAttribute('href', `${jokeInfo.url}`);
   [icon, id, date, favBtn, text].forEach(el => joke.appendChild(el));
@@ -274,8 +274,8 @@ function appenderToCreate(jokeInfo, flag = true) {
     prevState.push(joke);
     isFavourite(joke);
   } else {
-    const i = joke.children.length === 5 ? 0 : 1;
-    const button = joke.children[3 + i];
+    const i = findIndex(joke.children.length);
+    const button = joke.children[i];
     button.click();
   }
 }
@@ -286,7 +286,8 @@ function onGetRan() {
 
 function onGetCat() {
   for (const value of categoryOnClick.values()) {
-    httpRequest(appenderSimple, `https://api.chucknorris.io/jokes/random?category=${value}`);
+    const category = value.toLowerCase();
+    httpRequest(appenderSimple, `https://api.chucknorris.io/jokes/random?category=${category}`);
   }
 }
 
@@ -325,8 +326,8 @@ function onGetSearch(value = '', flag = true) {
 function onGetClick() {
   for (const el of prevState) {
     el.remove();
-    prevState = [];
   }
+  prevState = [];
   for (const el in ident) {
     if (ident[el]) onGet[el]();
   }
@@ -366,13 +367,13 @@ function onSearchWrap() {
   br.id = 'brToDel';
   input.placeholder = 'Free text search...';
   return () => {
-    const exist = document.getElementsByTagName('input');
-    if (exist[0]) {
-      exist[0].remove();
-      document.getElementById('brToDel').remove();
-      return;
-    }
-    toPut.insertBefore(input, before);
-    toPut.insertBefore(br, before);
+    ident['Sear'] ?
+      [input, br].map(el => el.remove()) :
+      [input, br].map(el => toPut.insertBefore(el, before));
   };
+}
+
+function findIndex(length) {
+  const index = length === 5 ? 3 : 4;
+  return index;
 }
