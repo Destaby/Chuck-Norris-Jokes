@@ -96,12 +96,9 @@ function onCategoriesWrap(arr) {
     block.appendChild(btn);
   }
   return () => {
-    if (ident['From']) {
-      const toDel = document.getElementById('onCat');
-      toDel.remove();
-      return;
-    }
-    before.parentElement.insertBefore(block, before);
+    ident['From'] ?
+      block.remove() :
+      before.parentElement.insertBefore(block, before);
   };
 }
 
